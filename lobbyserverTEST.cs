@@ -72,6 +72,10 @@ public class lobbyserverTEST : MonoBehaviour {
             int numPlayers = SteamMatchmaking.GetNumLobbyMembers(firstLobbyListed);
 
             Debug.Log("\t Number of players : " + numPlayers);
+            for(int i=0; i< numPlayers; i++)
+            {
+                Debug.Log("\t Player(" + i + ") == " + SteamFriends.GetFriendPersonaName(SteamMatchmaking.GetLobbyMemberByIndex(firstLobbyListed, i)));
+            }
         }
         else
             Debug.Log("Failed to join lobby.");
