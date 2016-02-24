@@ -9,7 +9,7 @@ public class lobbyserverTEST : MonoBehaviour {
     protected Callback<LobbyMatchList_t> Callback_lobbyList;
     protected Callback<LobbyEnter_t> Callback_lobbyEnter;
 
-    protected CSteamID firstLobbyListed;
+    ulong lobbyID;
 
     // Use this for initialization
     void Start () {
@@ -46,18 +46,18 @@ public class lobbyserverTEST : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.J))
         {
             Debug.Log("Trying to join FIRST listed lobby ...");
-            SteamAPICall_t try_joinLobby = SteamMatchmaking.JoinLobby(firstLobbyListed);
+            SteamAPICall_t try_joinLobby = SteamMatchmaking.JoinLobby(SteamMatchmaking.GetLobbyByIndex(0));
         }
 
         // Command - List lobby members
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            int numPlayers = SteamMatchmaking.GetNumLobbyMembers(firstLobbyListed);
+            int numPlayers = SteamMatchmaking.GetNumLobbyMembers((CSteamID)lobbyID);
 
             Debug.Log("\t Number of players currently in lobby : " + numPlayers);
             for (int i = 0; i < numPlayers; i++)
             {
-                Debug.Log("\t Player(" + i + ") == " + SteamFriends.GetFriendPersonaName(SteamMatchmaking.GetLobbyMemberByIndex(firstLobbyListed, i)));
+                Debug.Log("\t Player(" + i + ") == " + SteamFriends.GetFriendPersonaName(SteamMatchmaking.GetLobbyMemberByIndex((CSteamID)lobbyID, i)));
             }
         }
     }
@@ -73,11 +73,12 @@ public class lobbyserverTEST : MonoBehaviour {
     void OnGetLobbiesList(LobbyMatchList_t result)
     {
         Debug.Log("Found " + result.m_nLobbiesMatching + " lobbies!");
-        firstLobbyListed = SteamMatchmaking.GetLobbyByIndex(0);
     }
 
     void OnLobbyEntered(LobbyEnter_t result)
     {
+        lobbyID = result.m_ulSteamIDLobby;
+
         if (result.m_EChatRoomEnterResponse == 1)
             Debug.Log("Lobby joined!");
         else
