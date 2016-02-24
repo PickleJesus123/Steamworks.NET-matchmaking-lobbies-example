@@ -69,7 +69,9 @@ public class lobbyserverTEST : MonoBehaviour {
         if (result.m_EChatRoomEnterResponse == 1)
         {
             Debug.Log("Lobby joined successfully!");
+            int numPlayers = SteamMatchmaking.GetNumLobbyMembers(firstLobbyListed);
 
+            Debug.Log("\t Number of players : " + numPlayers);
         }
         else
             Debug.Log("Failed to join lobby.");
