@@ -28,25 +28,37 @@ public class lobbyserverTEST : MonoBehaviour {
     {
         SteamAPI.RunCallbacks();
 
-        // Create new lobby
+        // Command - Create new lobby
         if (Input.GetKeyDown(KeyCode.C))
         {
             Debug.Log("Trying to create lobby ...");
             SteamAPICall_t try_toHost = SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypePublic, 8);
         }
 
-        // List lobbies
+        // Command - List lobbies
         if (Input.GetKeyDown(KeyCode.L))
         {
             Debug.Log("Trying to get list of available lobbies ...");
             SteamAPICall_t try_getList = SteamMatchmaking.RequestLobbyList();
         }
 
-        // Join lobby at index 0 (testing purposes)
+        // Command - Join lobby at index 0 (testing purposes)
         if (Input.GetKeyDown(KeyCode.J))
         {
             Debug.Log("Trying to join FIRST listed lobby ...");
             SteamAPICall_t try_joinLobby = SteamMatchmaking.JoinLobby(firstLobbyListed);
+        }
+
+        // Command - List lobby members
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            int numPlayers = SteamMatchmaking.GetNumLobbyMembers(firstLobbyListed);
+
+            Debug.Log("\t Number of players currently in lobby : " + numPlayers);
+            for (int i = 0; i < numPlayers; i++)
+            {
+                Debug.Log("\t Player(" + i + ") == " + SteamFriends.GetFriendPersonaName(SteamMatchmaking.GetLobbyMemberByIndex(firstLobbyListed, i)));
+            }
         }
     }
 
@@ -67,16 +79,7 @@ public class lobbyserverTEST : MonoBehaviour {
     void OnLobbyEntered(LobbyEnter_t result)
     {
         if (result.m_EChatRoomEnterResponse == 1)
-        {
-            Debug.Log("Lobby joined successfully!");
-            int numPlayers = SteamMatchmaking.GetNumLobbyMembers(firstLobbyListed);
-
-            Debug.Log("\t Number of players : " + numPlayers);
-            for(int i=0; i< numPlayers; i++)
-            {
-                Debug.Log("\t Player(" + i + ") == " + SteamFriends.GetFriendPersonaName(SteamMatchmaking.GetLobbyMemberByIndex(firstLobbyListed, i)));
-            }
-        }
+            Debug.Log("Lobby joined!");
         else
             Debug.Log("Failed to join lobby.");
     }
