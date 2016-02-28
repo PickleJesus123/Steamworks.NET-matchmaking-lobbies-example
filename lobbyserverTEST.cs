@@ -74,7 +74,8 @@ public class lobbyserverTEST : MonoBehaviour {
         else
             Debug.Log("Lobby created -- failure ...");
 
-        SteamMatchmaking.SetLobbyData((CSteamID)result.m_ulSteamIDLobby, "name", "A game!");
+        string personalName = SteamFriends.GetPersonaName();
+        SteamMatchmaking.SetLobbyData((CSteamID)result.m_ulSteamIDLobby, "name", personalName+"'s game");
     }
 
     void OnGetLobbiesList(LobbyMatchList_t result)
