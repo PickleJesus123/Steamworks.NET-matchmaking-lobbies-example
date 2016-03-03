@@ -24,6 +24,7 @@ public class onlineGameplay : MonoBehaviour {
 
     void getNetworkData()
     {
+    	//Recieve packets from other members in the lobby with us
         uint msgSize;
         while(SteamNetworking.IsP2PPacketAvailable(out msgSize))
         {
@@ -37,7 +38,7 @@ public class onlineGameplay : MonoBehaviour {
                 
                 switch (TYPE)
                 {
-                    case 1: //Packet type 1 == GOT CHAT MESSAGE
+                    case 1: //Packet type 1 == GOT IN-GAME CHAT MESSAGE
                         Debug.log(lobby_names_[getPlayerIndex(steamIDRemote)] + " says: "+msg);
                         break;
                     default: Debug.Log("BAD PACKET"); break;
