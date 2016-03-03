@@ -35,13 +35,11 @@ public class CommGod : MonoBehaviour {
             {
                 int TYPE = packet[0];
                 string msg = System.Text.Encoding.UTF8.GetString(SubArray(packet, 1, packet.Length-1));
-
                 
                 switch (TYPE)
                 {
-                    case 1:
-                        Camera.main.GetComponent<mainMenu_ctr>().chat.text = Camera.main.GetComponent<mainMenu_ctr>().chat.text+"\n"
-                            + lobby_names_[getPlayerIndex(steamIDRemote)] + ": "+msg;
+                    case 1: //Packet type 1 == GOT CHAT MESSAGE
+                        Debug.log(lobby_names_[getPlayerIndex(steamIDRemote)] + " says: "+msg);
                         break;
                     default: Debug.Log("BAD PACKET"); break;
                 }
