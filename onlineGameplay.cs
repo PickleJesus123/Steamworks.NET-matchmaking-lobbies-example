@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
-public class CommGod : MonoBehaviour {
+public class onlineGameplay : MonoBehaviour {
 
     protected Callback<P2PSessionRequest_t> Callback_newConnection;
     public List<CSteamID> lobby_members_;
