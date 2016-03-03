@@ -7,10 +7,9 @@ using System;
 
 public class CommGod : MonoBehaviour {
 
+    protected Callback<P2PSessionRequest_t> Callback_newConnection;
     public List<CSteamID> lobby_members_;
     public List<string> lobby_names_;
-
-    protected Callback<P2PSessionRequest_t> Callback_newConnection;
 
     void Start () {
         lobby_names_ = new List<string>();
